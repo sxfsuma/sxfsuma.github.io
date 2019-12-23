@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>The Size Of A Java Object</title>
+      <link href="/2019/12/19/blogs/java/The-Size-Of-Java-Object/"/>
+      <url>/2019/12/19/blogs/java/The-Size-Of-Java-Object/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>​       之前 一直没有关注一个<code>Java</code> 对象会占用多少内存，最近在工作中遇到这样的场景，需要考虑对象在内存中占用多少内存，所以整理一下有关<code>Java</code> 对象的相关知识，java对象的结构，是如何在内存中存储的，以及占用多少内存等相关的知识点。</p><hr><h2 id="Java对象的结构"><a href="#Java对象的结构" class="headerlink" title="Java对象的结构"></a>Java对象的结构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object object = <span class="keyword">new</span> Object()</span><br></pre></td></tr></table></figure><p>首先来了解一下<code>java</code>实例对象的结构是什么样子的。</p><p>在<code>HotSpot</code>虚拟机中,对象在内存中存储的布局可以分为3块区域：对象头（Header），实例数据（Instance Data）和对象填充（Padding）。</p><p><img alt data-src="https://i.loli.net/2019/12/21/hszlDCTvAnP2BFK.png" class="lazyload"></p><ul><li><p><strong>对象头</strong>：Hotspot虚拟机的对象头主要包括两部分数据：Mark Word（标记字段）、Class Pointer（类型指针）。数组长度（如果有的话）</p></li><li><p><strong>实例数据</strong>：对象真正存储的有效信息，存放类的属性数据信息，包括父类的属性信息。</p></li><li><p><strong>对齐填充</strong>：由于虚拟机要求 对象起始地址必须是8字节的整数倍。填充数据不是必须存在的，仅仅是为了字节对齐。</p></li></ul><h3 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h3><p>  对象头主要包括两部分数据：Mark Word（标记字段）、Class Pointer（类型指针），数组长度（如果有的话）</p><p>  <img alt data-src="https://i.loli.net/2019/12/21/vH9ROSwaY62WAns.png" class="lazyload"></p><p>  <strong>Class Pointer</strong>:是对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例</p><p>  <strong>Mark Word</strong> : 用于存储对象自身的运行时数据，它是实现轻量级锁和偏向锁的关键。</p>  <a id="more"></a><p><img alt="to be continued.png" data-src="https://i.loli.net/2019/12/19/GI4VxycizW9pH7B.png" class="lazyload"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> Object </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第一篇博客</title>
+      <link href="/2019/12/18/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
+      <url>/2019/12/18/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>今天是公元 <code>2019-12-18</code>日，星期三，天气晴。使用<code>hexo</code> + <code>github</code>重新搭建了一个静态博客系统，之前也有搭建过，由于图床的原因，之前写的博客有很多图片都看不到了，恰好也想重新换一个主题，就再重新整理一下了。搭建这个博客的目的是为了督促自己的学习，多写技术博客，同时也会在博客上记录一些生活上和工作上的事情。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Demo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Demo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
