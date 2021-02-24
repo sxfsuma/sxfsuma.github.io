@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.JsDelivr.net/gh/sxfsuma/cloudImg//data/img路人女主-加藤惠.jpeg">
 <meta property="article:published_time" content="2021-01-17T01:40:35.000Z">
-<meta property="article:modified_time" content="2021-02-04T14:04:40.071Z">
+<meta property="article:modified_time" content="2021-02-24T15:57:51.747Z">
 <meta property="article:author" content="mastersxf">
 <meta property="article:tag" content="Jvm">
 <meta name="twitter:card" content="summary">
@@ -100,7 +100,7 @@ const getScript = url => new Promise((resolve, reject) => {
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2021-02-04 22:04:40'
+  postUpdate: '2021-02-24 23:57:51'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -165,7 +165,7 @@ if (asideStatus !== undefined) {
    } else {
      document.documentElement.classList.remove('hide-aside')
    }
-}})()</script><meta name="generator" content="Hexo 5.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://avatars3.githubusercontent.com/u/22931851?s=460&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.JsDelivr.net/gh/sxfsuma/cloudImg//data/img路人女主-加藤惠.jpeg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">sxfsuma</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">对象进入老年代情况浅析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-17T01:40:35.000Z" title="发表于 2021-01-17 09:40:35">2021-01-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-04T14:04:40.071Z" title="更新于 2021-02-04 22:04:40">2021-02-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>28分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>最近在做项目性能优化的时候，其中有一点是需要优化老年代GC的情况，一是需要尽量避免老年代的增长，尽可能不发生Full GC或者是极大延长Full GC的时间间隔，二是降低Full GC期间的STW时间，需要考分析引起老年代增长的具体原因，本文整理一下对象进入老年代的几种情况，方便之后回顾。</p>
+}})()</script><meta name="generator" content="Hexo 5.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://avatars3.githubusercontent.com/u/22931851?s=460&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.JsDelivr.net/gh/sxfsuma/cloudImg//data/img路人女主-加藤惠.jpeg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">sxfsuma</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">对象进入老年代情况浅析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-17T01:40:35.000Z" title="发表于 2021-01-17 09:40:35">2021-01-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-24T15:57:51.747Z" title="更新于 2021-02-24 23:57:51">2021-02-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>28分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>最近在做项目性能优化的时候，其中有一点是需要优化老年代GC的情况，一是需要尽量避免老年代的增长，尽可能不发生Full GC或者是极大延长Full GC的时间间隔，二是降低Full GC期间的STW时间，需要考分析引起老年代增长的具体原因，本文整理一下对象进入老年代的几种情况，方便之后回顾。</p>
 <p>对象进入老年代的情况主要分为以下四种：</p>
 <ul>
 <li>1、长期存活的对象进入老年代。</li>
@@ -181,8 +181,113 @@ if (asideStatus !== undefined) {
 <p>3、实际的阈值不是固定不变的，是动态变化的。 （这个在动态年龄判定中会详细说到）</p>
 <p>下面解释一下第一点和第二点，关于第三点会在动态年龄判定中进行详细描述。</p>
 <p>1、首先解释一下最大值只能到15的原因，如果了解对象的结构的话就会知道对象的分代年龄存储在对象的对象头的Mark Word 中，不管是在32位的JVM中还是64位的<code>JVM</code>中，年龄计数器都占比4个bit，意味着年龄计数器的最大值只能计到15（1111）。这也是为什么进入老年代的年龄阈值最大值为15的原因。</p>
-<p>下面这张图表示的是32位的JVM下对象头的Mark Word的结构。</p>
-<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2019/12/23/PRTMbNB1LjgGpxF.png" alt="对象结构Mark Word"></p>
+<p>下面表示的是32位的JVM下对象头的Mark Word的结构:</p>
+<table borderCollapse="collapse" border="1" solid=#555555>
+  <tr align="center">
+     <th colspan="6" bgcolor=#D2691E>Mark Word (32bit)</th>
+  </tr>
+  <tr align="center">
+    <th rowspan="2" border="1" bgcolor=#E6E6FA>锁状态</th>
+    <th colspan="2" bgcolor=#E6E6FA>25bit</th>
+    <th rowspan="2" bgcolor=#E6E6FA>4bit</th>
+    <th bgcolor=#E6E6FA>1bit</th>
+    <th bgcolor=#E6E6FA>2bit</th>
+  </tr>
+  <tr align="center">
+    <td bgcolor=#E6E6FA>23bit</td>
+    <td bgcolor=#E6E6FA>2bit</td>
+    <td bgcolor=#E6E6FA>是否偏向锁</td>
+    <td bgcolor=#E6E6FA>锁标志位</td>
+  </tr>
+  <tr align="center">
+    <td>无锁状态</td>
+    <td colspan="2">对象的hash code</td>
+    <td>分代年龄</td>
+      <td>0</td>
+      <td>01</td>
+  </tr>
+  <tr align="center">
+    <td>轻量级锁</td>
+    <td  colspan="4">指向栈中锁记录的指针</td>
+    <td>00</td>
+  </tr>
+    <tr align="center">
+    <td>重量级锁</td>
+    <td  colspan="4">指向互斥量(重量级锁)的指针</td>
+    <td>10</td>
+  </tr>
+    <tr align="center">
+    <td>GC标志</td>
+    <td  colspan="4">unused</td>
+    <td>11</td>
+  </tr>
+    <tr align="center">
+    <td>偏向锁</td>
+    <td>线程ID</td>
+    <td>epoch</td>
+    <td>分代年龄</td>
+    <td>1</td>
+    <td>01</td>
+  </tr>
+</table>
+
+<p>64位JVM下对象头的Mark Word的结构:</p>
+<table borderCollapse="collapse" border="1" solid=#555555>
+  <tr align="center">
+     <th colspan="10" bgcolor=#D2691E>Mark Word (64bit)</th>
+  </tr>
+  <tr align="center">
+    <th rowspan="2" border="1" bgcolor=#E6E6FA>锁状态</th>
+    <th colspan="2" bgcolor=#E6E6FA>25bit</th>
+    <th colspan="3" bgcolor=#E6E6FA>31bit</th>
+    <th bgcolor=#E6E6FA rowspan="2">1bit</th>
+    <th bgcolor=#E6E6FA rowspan="2">4bit</th>
+    <th bgcolor=#E6E6FA>1bit</th>
+    <th bgcolor=#E6E6FA>2bit</th>
+  </tr>
+  <tr align="center">
+    <td colspan="4" bgcolor=#E6E6FA>54bit</td>
+    <td bgcolor=#E6E6FA>2bit</td>
+    <td bgcolor=#E6E6FA>是否偏向锁</td>
+    <td bgcolor=#E6E6FA>锁标志位</td>
+  </tr>
+  <tr align="center">
+    <td>无锁状态</td>
+    <td colspan="2">unused</td>
+    <td colspan="3">对象的hash code</td>
+    <td>unused</td>
+    <td>分代年龄</td>
+    <td>0</td>
+    <td>01</td>
+  </tr>
+  <tr align="center">
+    <td>轻量级锁</td>
+    <td  colspan="8">指向栈中锁记录的指针</td>
+    <td>00</td>
+  </tr>
+    <tr align="center">
+    <td>重量级锁</td>
+    <td  colspan="8">指向互斥量(重量级锁)的指针</td>
+    <td>10</td>
+  </tr>
+    <tr align="center">
+    <td>GC标志</td>
+    <td  colspan="8">unused</td>
+    <td>11</td>
+  </tr>
+    <tr align="center">
+    <td>偏向锁</td>
+    <td colspan="4" >线程ID</td>
+    <td>epoch</td>
+    <td>unused</td>
+    <td>分代年龄</td>
+    <td>1</td>
+    <td>01</td>
+  </tr>
+</table>
+
+
+
 <p>2、默认值不总是15，在PS 垃圾收集器中的默认值是15，而在<code>CMS</code>垃圾回收器中是6，参考官方文档中：</p>
 <blockquote>
 <p><code>-XX:MaxTenuringThreshold</code>=<em>threshold</em>Sets the maximum tenuring threshold for use in adaptive GC sizing. <strong>The largest value is 15</strong>. <strong>The default value is 15 for the parallel (throughput) collector,</strong> and <strong>6 for the CMS collector.</strong></p>
@@ -317,15 +422,13 @@ if (asideStatus !== undefined) {
 <p><code>JVM</code>中还有另外一个参数：<code>-XX:TargetSurvivorRatio</code>，这是期望survivor区存活大小的参数，默认是50，即50%。而在<code>ageTable.cpp</code>的动态计算方法<code>ageTable::compute_tenuring_threshold</code>中则使用到了这个参数进行计算<code>desired_survivor_size</code>：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">uint <span class="title">ageTable::compute_tenuring_threshold</span><span class="params">(<span class="keyword">size_t</span> survivor_capacity)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> desired_survivor_size = (<span class="keyword">size_t</span>)((((<span class="keyword">double</span>) survivor_capacity)*TargetSurvivorRatio)/<span class="number">100</span>);</span><br><span class="line">  <span class="keyword">size_t</span> total = <span class="number">0</span>;</span><br><span class="line">  uint age = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (age &lt; table_size) &#123;</span><br><span class="line">    total += sizes[age];</span><br><span class="line">    <span class="comment">// check if including objects of age &#x27;age&#x27; made us pass the desired</span></span><br><span class="line">    <span class="comment">// size, if so &#x27;age&#x27; is the new threshold</span></span><br><span class="line">    <span class="keyword">if</span> (total &gt; desired_survivor_size) <span class="keyword">break</span>;</span><br><span class="line">    age++;</span><br><span class="line">  &#125;</span><br><span class="line">  uint result = age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>简单的说即默认情况下如果某一年龄值的超过了survivor的50%，此年龄值与<code>MaxTenuringThreshold</code>两者中更小的值将会成为新的晋升阈值。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><blockquote>
-<p>《深入理解Java虚拟机》（第二版） 周志明</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>《深入理解Java虚拟机》（第二版） 周志明</p>
 <p><a target="_blank" rel="noopener" href="https://www.doudaxia.club/index.php/archives/135/">https://www.doudaxia.club/index.php/archives/135/</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.doudaxia.club/index.php/archives/90/">https://www.doudaxia.club/index.php/archives/90/</a></p>
 <p><a target="_blank" rel="noopener" href="http://www.reins.altervista.org/java/gc1.4.2_faq.html">http://www.reins.altervista.org/java/gc1.4.2_faq.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_24986539/article/details/107904163">https://blog.csdn.net/qq_24986539/article/details/107904163</a></p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1082687">https://cloud.tencent.com/developer/article/1082687</a></p>
-</blockquote>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">mastersxf</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sxfsuma.github.io/2021/01/17/java/jvm/%E5%AF%B9%E8%B1%A1%E8%80%81%E5%B9%B4%E4%BB%A3%E6%83%85%E5%86%B5%E6%B5%85%E6%9E%90/">https://sxfsuma.github.io/2021/01/17/java/jvm/%E5%AF%B9%E8%B1%A1%E8%80%81%E5%B9%B4%E4%BB%A3%E6%83%85%E5%86%B5%E6%B5%85%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sxfsuma.github.io" target="_blank">sxfsuma</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Jvm/">Jvm</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.JsDelivr.net/gh/sxfsuma/cloudImg//data/img路人女主-加藤惠.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/06/algorithm/BFS/"><img class="prev-cover" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BFS &amp; DFS</div></div></a></div><div class="next-post pull-right"><a href="/2019/12/19/java/basic/Java-%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E7%9A%84%E8%AE%A1%E7%AE%97/"><img class="next-cover" data-lazy-src="https://i.loli.net/2019/12/18/shECrwo3npJ75Gc.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java 对象大小计算</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E6%9C%9F%E5%AD%98%E6%B4%BB%E5%AF%B9%E8%B1%A1%E8%BF%9B%E5%85%A5%E8%80%81%E5%B9%B4%E4%BB%A3%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">长期存活对象进入老年代。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%AF%B9%E8%B1%A1%E7%9B%B4%E6%8E%A5%E8%BF%9B%E5%85%A5%E8%80%81%E5%B9%B4%E4%BB%A3%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">大对象直接进入老年代。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">2.1.</span> <span class="toc-text">Parallel Scavenge</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Serial"><span class="toc-number">2.2.</span> <span class="toc-text">Serial</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ParNew"><span class="toc-number">2.3.</span> <span class="toc-text">ParNew</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E6%8B%85%E4%BF%9D"><span class="toc-number">3.</span> <span class="toc-text">空间分配担保</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%B9%B4%E9%BE%84%E5%88%A4%E5%AE%9A"><span class="toc-number">4.</span> <span class="toc-text">动态年龄判定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2021 By mastersxf</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>var preloader = {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">mastersxf</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://sxfsuma.github.io/2021/01/17/java/jvm/%E5%AF%B9%E8%B1%A1%E8%80%81%E5%B9%B4%E4%BB%A3%E6%83%85%E5%86%B5%E6%B5%85%E6%9E%90/">https://sxfsuma.github.io/2021/01/17/java/jvm/%E5%AF%B9%E8%B1%A1%E8%80%81%E5%B9%B4%E4%BB%A3%E6%83%85%E5%86%B5%E6%B5%85%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://sxfsuma.github.io" target="_blank">sxfsuma</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Jvm/">Jvm</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.JsDelivr.net/gh/sxfsuma/cloudImg//data/img路人女主-加藤惠.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2019/12/19/java/basic/Java-%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E7%9A%84%E8%AE%A1%E7%AE%97/"><img class="next-cover" data-lazy-src="https://i.loli.net/2019/12/18/shECrwo3npJ75Gc.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java 对象大小计算</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E6%9C%9F%E5%AD%98%E6%B4%BB%E5%AF%B9%E8%B1%A1%E8%BF%9B%E5%85%A5%E8%80%81%E5%B9%B4%E4%BB%A3%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">长期存活对象进入老年代。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%AF%B9%E8%B1%A1%E7%9B%B4%E6%8E%A5%E8%BF%9B%E5%85%A5%E8%80%81%E5%B9%B4%E4%BB%A3%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">大对象直接进入老年代。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">2.1.</span> <span class="toc-text">Parallel Scavenge</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Serial"><span class="toc-number">2.2.</span> <span class="toc-text">Serial</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ParNew"><span class="toc-number">2.3.</span> <span class="toc-text">ParNew</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E6%8B%85%E4%BF%9D"><span class="toc-number">3.</span> <span class="toc-text">空间分配担保</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%B9%B4%E9%BE%84%E5%88%A4%E5%AE%9A"><span class="toc-number">4.</span> <span class="toc-text">动态年龄判定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2021 By mastersxf</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>var preloader = {
   endLoading: () => {
     document.body.style.overflow = 'auto';
     document.getElementById('loading-box').classList.add("loaded")
